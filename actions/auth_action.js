@@ -12,6 +12,5 @@ export const facebookLogin = () => async dispatch => {
 	} else {
 		//start FB login process
 
-
 	}
 }
