@@ -4,9 +4,19 @@ import {connect} from 'react-redux';
 import * as actions from '../actions'
 
 class AuthScreen extends React.Component {
+    onAuthComplete(props) {
+        if (props.token) {
+            this.props.navigation.navigate('map');
+        }
+    }
+
     componentDidMount() {
         this.props.facebookLogin();
-        AsyncStorage.removeItem('fb_token');
+        this.onAuthComplete(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.onAuthComplete(nextProps);
     }
 
     render() {
@@ -18,4 +28,8 @@ class AuthScreen extends React.Component {
     }
 }
 
-export default connect(null, actions)(AuthScreen);
+function mapStatesToProps({auth}) {
+    return {token: auth.token};
+}
+
+export default connect(mapStatesToProps, actions)(AuthScreen);

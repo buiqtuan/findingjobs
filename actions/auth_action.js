@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
-import { Facebook } from 'expo'
+import { Facebook } from 'expo';
+import {  } from 'react-redux';
 
 import {
 	FACEBOOK_LOGIN_SUCCESS,
