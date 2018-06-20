@@ -14,13 +14,13 @@ const JOB_QUERY_PARAMS = {
 	q: 'javascript'
 };
 
-export const fetchJobs = (region) => async (dispatch) => {
+export const fetchJobs = (region, callback) => async (dispatch) => {
 	try {
 		let zip = await reverseGeocode(region);
-
 		let {data} = await axios.get(buildJobUrl(zip));
-		   
 		dispatch({type: FETCH_JOBS, payload: data})
+
+		callback();
 	} catch(err) {
 		console.error(err);
 	}
