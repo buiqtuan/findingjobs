@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {FETCH_JOBS} from './types';
+import {FETCH_JOBS, LIKE_JOB, CLEAR_LIKED_JOBS} from './types';
 import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
 
@@ -13,6 +13,19 @@ const JOB_QUERY_PARAMS = {
 	radius: 10,
 	q: 'javascript'
 };
+
+export const clearLikedJobs = () => {
+	return {
+		type: CLEAR_LIKED_JOBS
+	}
+}
+
+export const likeJob = (job) => {
+	return {
+		payload: job,
+		type: LIKE_JOB
+	};
+}
 
 export const fetchJobs = (region, callback) => async (dispatch) => {
 	try {
