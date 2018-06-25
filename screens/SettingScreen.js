@@ -20,7 +20,7 @@ class SettingScreen extends React.Component {
                     title="Reset liked jobs"
                     large
                     icon={{name: 'delete-forever'}}
-                    backgroundColor="F44336"
+                    backgroundColor="#F44336"
                     onPress={this.props.clearLikedJobs}
                 />
             </View>

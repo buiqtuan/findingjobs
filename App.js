@@ -23,6 +23,15 @@ import DeckScreen from './screens/DeckScreen';
 import SettingScreen from './screens/SettingScreen';
 import ReviewScreen from './screens/ReviewScreen';
 
+import {PersistGate} from 'redux-persist/lib/integration/react';
+import storage from 'redux-persist/lib/storage';
+import {persistReducer, persistStore} from 'redux-persist';
+
+const persistConfig = {
+  key: 'root',
+  storage
+}
+
 export default class App extends React.Component {
   render() {
     const MainNavigator = TabNavigator({
@@ -51,11 +60,15 @@ export default class App extends React.Component {
       lazyLoad: true
     });
 
+    const persistor = persistStore(store);
+
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <MainNavigator/>
-        </View>
+        <PersistGate persistor={persistor}>
+          <View style={styles.container}>
+            <MainNavigator/>
+          </View>
+        </PersistGate>
       </Provider>
     );
   }
