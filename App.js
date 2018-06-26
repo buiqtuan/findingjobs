@@ -9,12 +9,15 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Alert
 } from 'react-native';
 import {TabNavigator, StackNavigator} from 'react-navigation';
 import { Provider } from 'react-redux';
 
 import store from './store';
+import registerForNotifications from './services/push_notification';
+import {Notifications} from 'expo';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -25,14 +28,24 @@ import ReviewScreen from './screens/ReviewScreen';
 
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import storage from 'redux-persist/lib/storage';
-import {persistReducer, persistStore} from 'redux-persist';
-
-const persistConfig = {
-  key: 'root',
-  storage
-}
+import {persistStore} from 'redux-persist';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    registerForNotifications();
+    Notifications.addListener((notification) => {
+      const {data : {text}, origin} = notification
+
+      if (origin === 'received' && text) {
+        Alert.alert(
+          'New notification!',
+          text,
+          [{text : 'Ok.'}]
+        );
+      }
+    });
+  }
+
   render() {
     const MainNavigator = TabNavigator({
       welcome: {screen: WelcomeScreen},
